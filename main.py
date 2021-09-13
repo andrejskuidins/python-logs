@@ -1,9 +1,10 @@
+
 from kubernetes.client.rest import ApiException
 from kubernetes import client, config
 from google.cloud import storage
 import datetime
 
-config.load_kube_config()
+config.load_incluster_config() 
 pod_name = "elasticsearch-logging-0"
 def elk_logs():
     try:
