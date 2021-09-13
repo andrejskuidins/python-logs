@@ -7,16 +7,12 @@ import datetime
 config.load_incluster_config() 
 pod_name = "elasticsearch-logging-0"
 def elk_logs():
-    try:
-        api_instance = client.CoreV1Api()
-        api_response = api_instance.read_namespaced_pod_log(name=pod_name, namespace='kube-system')
-        return api_response
-    except ApiException as e:
-        return 'Found exception in reading the logs'
-
-f = open("elasticsearch-logging-0.log", "w")
-f.write(elk_logs())
-f.close()
+    api_instance = client.CoreV1Api()
+    api_response = api_instance.read_namespaced_pod_log(name=pod_name, namespace='kube-system')
+    f = open("elasticsearch-logging-0.log", "w")
+    f.write(api_response)
+    f.close()
+    return 'Logs written to file'
 
 def upload_blob():
   ct = str(datetime.datetime.now().timestamp())
