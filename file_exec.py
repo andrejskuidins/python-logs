@@ -19,10 +19,10 @@ def parse_folder(dir):
                         subprocess.run(["ls", "-l", full_path], check=True)
                     except subprocess.CalledProcessError as e:
                         print(f'Error executing file: {e}')
-    except OSError as e:
-        print(f'OS Error: {e}')
     except PermissionError as e:
         print(f'Permission: {e}')
+    except OSError as e:
+        print(f'OS Error: {e}')
     except Exception as e:
         print(f'Exception: {e}')
 
