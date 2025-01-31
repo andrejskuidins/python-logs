@@ -16,6 +16,7 @@ def parse_folder(dir):
                     print(f'File: {f}')
                     try:
                         subprocess.run(["python3", full_path], check=True)
+                        subprocess.run(["ls", "-l", full_path], check=True)
                     except subprocess.CalledProcessError as e:
                         print(f'Error executing file: {e}')
     except OSError as e:
