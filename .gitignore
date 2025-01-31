@@ -1,0 +1,25 @@
+.project
+.pydevproject
+.idea
+.vscode
+utest/output_dir
+__pycache__/
+*.py[cod]
+*.orig
+*py.class
+MANIFEST
+*.egg-info
+*.egg
+.pytest_cache
+
+dist
+build
+.pabotsuitenames
+.mypy_cache
+stub_files
+venv*
+
+#robot report files:
+log.html
+output.xml
+report.html
