@@ -3,7 +3,7 @@ import json
 import os
 import sys
 
-def launch_rest(env) -> bool:
+def launch_rest(env) -> None
     try:
         url = os.environ[env]
         r = requests.get(url)
