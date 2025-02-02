@@ -1,6 +1,6 @@
 import json
 
-def get_json(filename) -> list:
+def get_json(filename: str) -> list:
     try:
         f = open(filename, 'r', encoding="utf-8")
         c = 0
