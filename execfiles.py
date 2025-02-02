@@ -3,12 +3,12 @@ import sys
 import logging
 import subprocess
 
-app_log = "app.log"
+APP_LOG = "app.log"
 
 logging.basicConfig(
   level = logging.INFO,
   handlers = [ logging.StreamHandler(),
-  logging.FileHandler(app_log)
+  logging.FileHandler(APP_LOG)
   ]
 )
 
