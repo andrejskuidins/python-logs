@@ -12,6 +12,7 @@ MANIFEST
 *.egg
 .pytest_cache
 *.log
+*.txt
 
 dist
 build
