@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cat /var/log/messages
+tail -n 1000 /var/log/syslog
