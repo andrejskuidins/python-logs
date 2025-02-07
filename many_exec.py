@@ -10,7 +10,8 @@ logging.basicConfig(level=logging.INFO,
 
 def exec_file(filename: str) -> int:
     try:
-        subprocess.run(filename, timeout=20, capture_output=True)
+        e = subprocess.run(filename, timeout=20, capture_output=True)
+        e.ca
     except subprocess.CalledProcessError as e:
         logging.error(f'process ended abnormally: {e}')
     except Exception as e:
@@ -30,10 +31,7 @@ def list_dir_find_sh(path: str) -> str:
         logging.error(f'Generic error: {e}')
 
 def main():
-    parser = argparse.ArgumentParser(
-                        prog='ProgramExecutor',
-                        description='Exec files',
-                        epilog='For non-production use')
+    parser = argparse.ArgumentParser(description='Exec files')
     parser.add_argument('dirname')           # positional argument
     args = parser.parse_args()
     list_dir_find_sh(args.dirname)
