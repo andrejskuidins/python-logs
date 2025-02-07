@@ -1,0 +1,32 @@
+2025-02-07T18:44:12.732317+02:00 ubuntu2 systemd[2655]: Started app-gnome-org.wezfurlong.wezterm-7060.scope - Application launched by gnome-shell.
+2025-02-07T18:44:19.772382+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]: warning: queue 0x5e3f193d0460 destroyed while proxies still attached:
+2025-02-07T18:44:19.772529+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   wl_subsurface#71 still attached
+2025-02-07T18:44:19.772582+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   wl_surface#70 still attached
+2025-02-07T18:44:19.772635+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   wl_subsurface#69 still attached
+2025-02-07T18:44:19.772713+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   wl_surface#68 still attached
+2025-02-07T18:44:19.772760+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   wl_subsurface#67 still attached
+2025-02-07T18:44:19.772808+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   wl_surface#66 still attached
+2025-02-07T18:44:19.772855+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   wl_subsurface#65 still attached
+2025-02-07T18:44:19.772899+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   wl_surface#64 still attached
+2025-02-07T18:44:19.772946+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   wl_subsurface#63 still attached
+2025-02-07T18:44:19.772998+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   wl_surface#62 still attached
+2025-02-07T18:44:19.773047+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   wl_callback#28 still attached
+2025-02-07T18:44:19.773095+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   xdg_wm_base#21 still attached
+2025-02-07T18:44:19.773147+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   wl_surface#20 still attached
+2025-02-07T18:44:19.773205+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   wl_data_device#17 still attached
+2025-02-07T18:44:19.773255+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   wl_pointer#15 still attached
+2025-02-07T18:44:19.773304+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   zwp_text_input_v3#14 still attached
+2025-02-07T18:44:19.773355+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   wl_keyboard#13 still attached
+2025-02-07T18:44:19.773404+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   zwp_primary_selection_device_v1#12 still attached
+2025-02-07T18:44:19.773450+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   zwp_primary_selection_device_manager_v1#3 still attached
+2025-02-07T18:44:19.773494+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   wl_data_device#11 still attached
+2025-02-07T18:44:19.773540+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   zwp_text_input_manager_v3#10 still attached
+2025-02-07T18:44:19.773591+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   wl_seat#9 still attached
+2025-02-07T18:44:19.773639+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   wl_subcompositor#8 still attached
+2025-02-07T18:44:19.773705+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   wl_data_device_manager#7 still attached
+2025-02-07T18:44:19.773758+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   wl_output#6 still attached
+2025-02-07T18:44:19.773812+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   wl_shm#5 still attached
+2025-02-07T18:44:19.773861+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   wl_compositor#4 still attached
+2025-02-07T18:44:19.773912+02:00 ubuntu2 org.wezfurlong.wezterm.desktop[7060]:   wl_registry#2 still attached
+2025-02-07T18:44:19.784712+02:00 ubuntu2 systemd[2655]: app-gnome-org.wezfurlong.wezterm-7060.scope: Consumed 512ms CPU time, 119.8M memory peak.
+2025-02-07T18:44:20.645120+02:00 ubuntu2 systemd[2655]: Started app-gnome-org.wezfurlong.wezterm-7187.scope - Application launched by gnome-shell.
