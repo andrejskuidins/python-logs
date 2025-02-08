@@ -13,7 +13,7 @@ def check_create_dir(filename: str) -> None:
     os.makedirs(os.path.basename(filename), )
 
 def execute_file(filename: str) -> None:
-    if os.path.splitext(filename)[1] == ".sh"
+    if os.path.splitext(filename)[1] == ".sh":
         subprocess.run(filename)
 
 
