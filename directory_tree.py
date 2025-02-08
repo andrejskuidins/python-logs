@@ -1,31 +1,43 @@
 import os
 import subprocess
 import logging
+import argparse
 
 APP_LOG = 'directory_tree.log'
+APP_CONF = 'directory_tree.conf'
 
 logging.basicConfig(level=logging.INFO,
                     handlers=[logging.StreamHandler(),
                     logging.FileHandler(APP_LOG)])
 
-def get_list(config_file: str="directory_tree.conf") -> list:
+def get_list(location, config_file: str=APP_CONF) -> list:
     with open(config_file, "r") as f:
         for l in f:
-            if os.path.isfile(l):
-                execute_file(l)
-            elif os.path.isdir(l):
-                check_create_dir(l)
+            linux_obj = l.strip()
+            logging.info(f'Processing object: {linux_obj}')
+            if os.path.isfile(linux_obj):
+                execute_file(linux_obj)
+            elif os.path.isdir(linux_obj):
+                check_create_dir(location, linux_obj)
             else:
-                logging.info('Not suitable object')
+                logging.info(f'Not suitable object {linux_obj}')
 
-def check_create_dir(dirname: str) -> None:
-    os.makedirs(os.path.basename(dirname), )
+def check_create_dir(location: str, dirname: str) -> None:
+    logging.info(f'Creating dirs: {dirname}')
+    os.makedirs(f'{location}/{os.path.basename(dirname)}', exist_ok=True)
 
 def execute_file(filename: str) -> None:
     if os.path.splitext(filename)[1] == ".sh":
-        subprocess.run(filename)
+        logging.info(f'Executing file: {filename}')
+        subprocess.run(filename, capture_output=True)
 
+def main():
+    parser = argparse.ArgumentParser(description='Program capturs files and folders and executes files while creating folders')
+    parser.add_argument('location')           # positional argument
+    args = parser.parse_args()
+    get_list(args.location)
 
-get_list()
+if __name__=="__main__":
+    main()
 
 
