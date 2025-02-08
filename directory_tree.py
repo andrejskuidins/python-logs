@@ -1,28 +1,20 @@
-#!/usr/bin/env python3
 import os
+import subprocess
 
-def restore_directory_tree(paths, target_base_path):
-    for path in paths:
-        path = path.strip()
-        if not path:
-            continue
+def get_list(config_file: str="directory_tree.conf") -> list:
+    with open(config_file, "r") as f:
+        for l in f:
+            if os.is_file(l):
+                execute_file(l)
+            else:
+                check_create_dir(l)
 
-        full_target_path = os.path.normpath(os.path.join(target_base_path, path.lstrip('/')))
+def check_create_dir(filename: str) -> None:
+    os.makedirs(os.path.basename(filename), )
 
-        if path.endswith('/'):
-            os.makedirs(full_target_path, exist_ok=True)
-            print(f"Created directory: {full_target_path}")
-        else:
-            os.makedirs(os.path.dirname(full_target_path), exist_ok=True)
-            open(full_target_path, 'a').close()
-            print(f"Created empty file: {full_target_path}")
+def execute_file(filename: str) -> None:
+    if os.path.splitext(filename)[1] == ".sh"
+        subprocess.run(filename)
 
-PATHS = [
-    '/temp/file1.c',
-    '/var/file.ext',
-    '/root/www/files/',
-    '/home/user/projects/',
-    '/var/log/myapp/debug.log'
-]
 
-restore_directory_tree(PATHS, '/tmp/restored')
+get_list()
