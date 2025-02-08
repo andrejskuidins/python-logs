@@ -14,21 +14,21 @@ def get_list(location, config_file: str=APP_CONF) -> list:
     with open(config_file, "r") as f:
         for l in f:
             linux_obj = l.strip()
-            logging.info(f'Processing object: {linux_obj}')
+            logging.info('Processing object: %s', linux_obj)
             if os.path.isfile(linux_obj):
                 execute_file(linux_obj)
             elif os.path.isdir(linux_obj):
                 check_create_dir(location, linux_obj)
             else:
-                logging.info(f'Not suitable object {linux_obj}')
+                logging.info('Not suitable object %s', linux_obj)
 
 def check_create_dir(location: str, dirname: str) -> None:
-    logging.info(f'Creating dirs: {dirname}')
+    logging.info('Creating dirs: %s', dirname)
     os.makedirs(f'{location}/{os.path.basename(dirname)}', exist_ok=True)
 
 def execute_file(filename: str) -> None:
     if os.path.splitext(filename)[1] == ".sh":
-        logging.info(f'Executing file: {filename}')
+        logging.info('Executing file: %s', filename)
         subprocess.run(filename, capture_output=True)
 
 def main():
