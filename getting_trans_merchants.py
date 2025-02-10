@@ -21,11 +21,12 @@ def write_file(filename: str, iban: str, transactions: int) -> None:
         f.write(f'{iban},{str(transactions)}\n')
 
 def transactions_calc(trans_list: list, discount: int) -> int:
-    calc_of_trans = 0
+    calc_of_amount = 0
+    calc_of_fees = 0
     for i in trans_list:
-        calc_of_trans += int(i["amount"])
-        calc_of_trans -= int(i["fee"])
-    return calc_of_trans
+        calc_of_amount += int(i["amount"])
+        calc_of_fees += int(i["fee"])
+    return round(calc_of_amount - calc_of_fees + calc_of_fees*discount/100)
 
 def get_api_transactions(merchant: str, filename: str) -> None:
     try:
