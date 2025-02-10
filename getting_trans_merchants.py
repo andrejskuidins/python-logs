@@ -25,7 +25,7 @@ def transactions_calc(trans_list: list, discount: int) -> int:
     for i in trans_list:
         calc_of_trans += int(i["amount"])
         calc_of_trans -= int(i["fee"])
-    return round(calc_of_trans*(discount/100))
+    return calc_of_trans
 
 def get_api_transactions(merchant: str, filename: str) -> None:
     try:
