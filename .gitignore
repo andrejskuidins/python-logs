@@ -13,6 +13,7 @@ MANIFEST
 .pytest_cache
 *.log
 *.txt
+*.csv
 
 dist
 build
