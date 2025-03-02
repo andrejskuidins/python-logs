@@ -53,7 +53,7 @@ def main() -> None:
         logging.error(f'Invalid JSON response: {e}')
         sys.exit(1)
 
-    with ProcessPoolExecutor(max_workers=10) as executor:
+    with ProcessPoolExecutor(max_workers=8) as executor:
         executor.map(merchant_processor, merchants)
 
     end_time = time.time()  # Record the end time
