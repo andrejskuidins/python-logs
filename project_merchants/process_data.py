@@ -18,7 +18,8 @@ def merchant_processor(merchant: str) -> None:
     for i in r.json()["transactions"]:
         sum_amount += i["amount"]
         sum_fees   += i["fee"]
-    write_transactions(r.json()["iban"], sum_amount - sum_fees)
+    total_amount = (sum_amount - sum_fees)*(100-r.json()["discount"]["fees_discount"]/100)
+    write_transactions(r.json()["iban"], total_amount)
 
 def init_out_file() -> None:
     with open(PAYMENTS_OUT, "w") as f:
