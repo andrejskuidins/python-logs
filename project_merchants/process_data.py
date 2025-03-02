@@ -1,7 +1,10 @@
-import requests
 import logging
 import time
-from concurrent.futures import ProcessPoolExecutor, as_completed
+import sys
+from typing import List
+from concurrent.futures import ProcessPoolExecutor
+
+import requests
 
 MERCHANT_URL = 'http://127.0.0.1:5000/merchants'
 LOGGING_LOG = 'merchant.log'
@@ -12,14 +15,21 @@ logging.basicConfig(level=logging.INFO,
                               logging.FileHandler(LOGGING_LOG)])
 
 def merchant_processor(merchant: str) -> None:
-    sum_amount = 0
-    sum_fees = 0
-    r = requests.get(f'{MERCHANT_URL}/{merchant}')
-    for i in r.json()["transactions"]:
-        sum_amount += i["amount"]
-        sum_fees   += i["fee"]
-    total_amount = (sum_amount - sum_fees)*(100-r.json()["discount"]["fees_discount"]/100)
-    write_transactions(r.json()["iban"], total_amount)
+    try:
+        sum_amount = 0
+        sum_fees = 0
+        r = requests.get(f'{MERCHANT_URL}/{merchant}')
+        if r.status_code == 200:
+            data = r.json()
+            for i in data["transactions"]:
+                sum_amount += i["amount"]
+                sum_fees   += i["fee"]
+            total_amount = round(sum_amount - sum_fees)
+            write_transactions(data["iban"], total_amount)
+        else:
+            logging.error(f'Merchant {merchant} has status code: {r.status_code}')
+    except Exception as e:
+        logging.error(f'Error processing merchant {merchant}: {e}')
 
 def init_out_file() -> None:
     with open(PAYMENTS_OUT, "w") as f:
@@ -29,17 +39,27 @@ def write_transactions(iban: str, amount: int) -> None:
     with open(PAYMENTS_OUT, "a") as f:
         f.write(f'{iban},{str(amount)}\n')
 
-if __name__=="__main__":
+def main() -> None:
     start_time = time.time()
 
     init_out_file()
 
-    merchants = requests.get(MERCHANT_URL).json()
+    try:
+        merchants: List[str] = requests.get(MERCHANT_URL).json()
+    except requests.exceptions.RequestException as e:
+        logging.error(f'GoC servers are unavaiable: {e}')
+        sys.exit(1)
+    except ValueError as e:
+        logging.error(f'Invalid JSON response: {e}')
+        sys.exit(1)
 
-    with ProcessPoolExecutor(max_workers=5) as executor:
+    with ProcessPoolExecutor(max_workers=10) as executor:
         executor.map(merchant_processor, merchants)
 
     end_time = time.time()  # Record the end time
     elapsed_time = end_time - start_time  # Calculate elapsed time
 
     logging.info(f"Elapsed time: {elapsed_time:.6f} seconds")
+
+if __name__=="__main__":
+    main()
