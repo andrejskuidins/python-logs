@@ -40,7 +40,7 @@ while right_stack.get_size() != num_disks:
     from_stack = get_input()
     print("\nWhich stack do you want to move to?\n")
     to_stack = get_input()
-    if from_stack is None:
+    if from_stack.is_empty():
       print("\n\nInvalid Move. Try Again")
     elif to_stack.is_empty() or from_stack.peek() < to_stack.peek():
       disk = from_stack.pop()
