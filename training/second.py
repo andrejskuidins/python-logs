@@ -22,15 +22,29 @@ class Stack:
         return len(self.stack)
 
 
-myStack = Stack()
-sentence = "([]{})"
-for i in sentence:
-    myStack.push(i)
+def func1(sentence: str) -> bool:
+    myStack = Stack()
+    for i in sentence:
+        if i in "([{":
+            myStack.push(i)
+        elif i in ")":
+            if myStack.pop() != "(":
+                return False
+        elif i in "]":
+            if myStack.pop() != "[":
+                return False
+        elif i in "}":
+            if myStack.pop() != "{":
+                return False
+    return myStack.isEmpty()
+
+print("([]{})")
+print(func1("([]{})"))
+
+print("{}()[]")
+print(func1("{}()[]"))
+
+print("[()]")
+print(func1("[(({[({[]})]}))]"))
 
 
-print("Stack: ", myStack.stack)
-print("Pop: ", myStack.pop())
-print("Stack after Pop: ", myStack.stack)
-print("Peek: ", myStack.peek())
-print("isEmpty: ", myStack.isEmpty())
-print("Size: ", myStack.size())
