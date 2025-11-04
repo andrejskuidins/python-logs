@@ -1,3 +1,5 @@
+# Check if a string like "([]{})" is properly balanced.
+
 class Stack:
     def __init__(self) -> None:
         self.stack = []
