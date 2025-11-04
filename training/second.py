@@ -1,23 +1,36 @@
-# Write a function that takes "aaabbc" and returns "a3b2c1"
+class Stack:
+    def __init__(self) -> None:
+        self.stack = []
+
+    def push(self, element):
+        self.stack.append(element)
+
+    def pop(self):
+        if self.isEmpty():
+            return "Stack is empty"
+        return self.stack.pop()
+
+    def peek(self):
+        if self.isEmpty():
+            return "Stack is empty"
+        return self.stack[-1]
+
+    def isEmpty(self):
+        return len(self.stack) == 0
+
+    def size(self):
+        return len(self.stack)
 
 
-def func1(word: str) -> str:
-    if not word:
-        return ""
-    result = []
-    counter = 0
-
-    for i in range(len(word) - 1):
-        if word[i] == word[i + 1]:
-            counter += 1
-        else:
-            result.append(word[i] + str(counter))
-            counter = 1
-
-    # Add the last character group
-    result.append(word[-1] + str(counter))
-
-    return "".join(result)
+myStack = Stack()
+sentence = "([]{})"
+for i in sentence:
+    myStack.push(i)
 
 
-print(func1("oooooossssswwwwaaabbcc"))
+print("Stack: ", myStack.stack)
+print("Pop: ", myStack.pop())
+print("Stack after Pop: ", myStack.stack)
+print("Peek: ", myStack.peek())
+print("isEmpty: ", myStack.isEmpty())
+print("Size: ", myStack.size())

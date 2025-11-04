@@ -21,6 +21,7 @@ build
 .mypy_cache
 stub_files
 venv*
+venv
 
 #robot report files:
 log.html
