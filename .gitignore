@@ -12,6 +12,7 @@ MANIFEST
 *.egg
 .pytest_cache
 *.log
+*.out
 *.txt
 *.csv
 
