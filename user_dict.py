@@ -9,7 +9,7 @@ HTTP_PARSE_LOG = "employees.log"
 HTTP_PARSE_OUT = "employees.out"
 
 
-def clear_obsolete(file_out, file_log):
+def clear_obsolete(file_out: str, file_log: str) -> None:
     try:
         os.remove(file_out)
         os.remove(file_log)
@@ -17,7 +17,7 @@ def clear_obsolete(file_out, file_log):
         print("Error: %s - %s." % (e.filename, e.strerror))
 
 
-def get_user_email(name) -> None:
+def get_user_email(name: str) -> None:
     url_path = f"https://localhost/api/users/{name}?user=andy"
     logging.info(f"Sending to: {url_path}")
     r = requests.get(
