@@ -13,7 +13,6 @@ MANIFEST
 .pytest_cache
 *.log
 *.out
-*.txt
 *.csv
 
 dist
