@@ -13,7 +13,7 @@ MSG2 = (
 MSG3 = """vhfinmxkl atox kxgwxkxw tee hy maxlx hew vbiaxkl hulhexmx. px'ee atox mh kxteer lmxi ni hnk ztfx by px ptgm mh dxxi hnk fxlltzxl ltyx."""
 
 MSG4 = """txm srom vkda gl lzlgzr qpdb? fepb ejac! ubr imn tapludwy mhfbz cza ruxzal wg zztylktoikqq!"""  # friends
-MSG4_t = "ymlok cp fbb ejv"  # dog
+MSG4_t = "you were able to decode this? nice work! you are becoming quite the expert at cryptography!"  # friends
 
 
 def vignere_decode(message, keyword):
@@ -67,7 +67,7 @@ def vignere_encode(message, keyword):
 
 
 print(vignere_decode(MSG4, "friends"))
-print(vignere_encode("barry is the spy", "dog"))
+print(vignere_encode(MSG4_t, "friends"))
 
 
 def caesar_decode(message, offset):
