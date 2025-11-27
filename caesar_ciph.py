@@ -12,6 +12,64 @@ MSG2 = (
 
 MSG3 = """vhfinmxkl atox kxgwxkxw tee hy maxlx hew vbiaxkl hulhexmx. px'ee atox mh kxteer lmxi ni hnk ztfx by px ptgm mh dxxi hnk fxlltzxl ltyx."""
 
+MSG4 = """txm srom vkda gl lzlgzr qpdb? fepb ejac! ubr imn tapludwy mhfbz cza ruxzal wg zztylktoikqq!"""  # friends
+MSG4_t = "ymlok cp fbb ejv"  # dog
+
+
+def vignere_decode(message, keyword):
+    alphabet = list(string.ascii_lowercase)
+    keyword_phrase = []
+    counter = 0
+    decoded = ""
+    for l in message:
+        if l == "." or l == "?" or l == "!" or l == " ":
+            keyword_phrase.append(l)
+            decoded += l
+            continue
+        if counter > len(keyword) - 1:
+            counter = 0
+            keyword_phrase.append(keyword[counter])
+        else:
+            keyword_phrase.append(keyword[counter])
+        position = alphabet.index(l) + 1
+        position2 = alphabet.index(keyword[counter]) + 1
+        position_final = position + position2
+        if position_final > 26:
+            position_final -= 26
+        new_letter = alphabet[position_final - 2]
+        decoded += new_letter
+        counter += 1
+    return decoded
+
+
+def vignere_encode(message, keyword):
+    alphabet = list(string.ascii_lowercase)
+    print(alphabet)
+    keyword_phrase = []
+    counter = 0
+    decoded = ""
+    for l in message:
+        if l == "." or l == "?" or l == "!" or l == " ":
+            keyword_phrase.append(l)
+            decoded += l
+            continue
+        if counter > len(keyword) - 1:
+            counter = 0
+            keyword_phrase.append(keyword[counter])
+        else:
+            keyword_phrase.append(keyword[counter])
+        position = alphabet.index(l) + 1
+        position2 = alphabet.index(keyword[counter]) + 1
+        position_final = position - position2
+        new_letter = alphabet[position_final]
+        decoded += new_letter
+        counter += 1
+    return keyword_phrase, decoded
+
+
+print(vignere_decode(MSG4, "friends"))
+print(vignere_encode("barry is the spy", "dog"))
+
 
 def caesar_decode(message, offset):
     alphabet = list(string.ascii_lowercase)
@@ -49,10 +107,10 @@ def caesar_encode(message, offset):
     return encode
 
 
-print(caesar_decode(MSG, 10))
-print(caesar_encode(MSG_2_ENCODE, 10))
-print(caesar_decode(MSG1, 10))
-print(caesar_decode(MSG2, 14))
-for i in range(1, len(list(string.ascii_lowercase))):
-    print(caesar_decode(MSG3, i))
-print(caesar_decode(MSG3, 7))
+# print(caesar_decode(MSG, 10))
+# print(caesar_encode(MSG_2_ENCODE, 10))
+# print(caesar_decode(MSG1, 10))
+# print(caesar_decode(MSG2, 14))
+# for i in range(1, len(list(string.ascii_lowercase))):
+#     print(caesar_decode(MSG3, i))
+# print(caesar_decode(MSG3, 7))
