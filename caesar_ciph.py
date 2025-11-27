@@ -22,7 +22,7 @@ def vignere_decode(message, keyword):
     counter = 0
     decoded = ""
     for l in message:
-        if l == "." or l == "?" or l == "!" or l == " ":
+        if l in string.punctuation or l in string.whitespace:
             keyword_phrase.append(l)
             decoded += l
             continue
@@ -48,7 +48,7 @@ def vignere_encode(message, keyword):
     counter = 0
     decoded = ""
     for l in message:
-        if l == "." or l == "?" or l == "!" or l == " ":
+        if l in string.punctuation or l in string.whitespace:
             keyword_phrase.append(l)
             decoded += l
             continue
