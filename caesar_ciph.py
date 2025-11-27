@@ -106,10 +106,10 @@ def caesar_encode(message, offset):
     return encode
 
 
-# print(caesar_decode(MSG, 10))
-# print(caesar_encode(MSG_2_ENCODE, 10))
-# print(caesar_decode(MSG1, 10))
-# print(caesar_decode(MSG2, 14))
-# for i in range(1, len(list(string.ascii_lowercase))):
-#     print(caesar_decode(MSG3, i))
-# print(caesar_decode(MSG3, 7))
+print(caesar_decode(MSG, 10))
+print(caesar_encode(MSG_2_ENCODE, 10))
+print(caesar_decode(MSG1, 10))
+print(caesar_decode(MSG2, 14))
+for i in range(1, len(list(string.ascii_lowercase))):
+    if "computers" in caesar_decode(MSG3, i):
+        print(caesar_decode(MSG3, i))
