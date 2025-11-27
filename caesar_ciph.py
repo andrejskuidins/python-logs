@@ -44,7 +44,6 @@ def vignere_decode(message, keyword):
 
 def vignere_encode(message, keyword):
     alphabet = list(string.ascii_lowercase)
-    print(alphabet)
     keyword_phrase = []
     counter = 0
     decoded = ""
@@ -64,7 +63,7 @@ def vignere_encode(message, keyword):
         new_letter = alphabet[position_final]
         decoded += new_letter
         counter += 1
-    return keyword_phrase, decoded
+    return decoded
 
 
 print(vignere_decode(MSG4, "friends"))
