@@ -28,9 +28,7 @@ def vignere_decode(message, keyword):
             continue
         if counter > len(keyword) - 1:
             counter = 0
-            keyword_phrase.append(keyword[counter])
-        else:
-            keyword_phrase.append(keyword[counter])
+        keyword_phrase.append(keyword[counter])
         position = alphabet.index(l) + 1
         position2 = alphabet.index(keyword[counter]) + 1
         position_final = position + position2
@@ -46,24 +44,22 @@ def vignere_encode(message, keyword):
     alphabet = list(string.ascii_lowercase)
     keyword_phrase = []
     counter = 0
-    decoded = ""
+    encoded = ""
     for l in message:
         if l in string.punctuation or l in string.whitespace:
             keyword_phrase.append(l)
-            decoded += l
+            encoded += l
             continue
         if counter > len(keyword) - 1:
             counter = 0
-            keyword_phrase.append(keyword[counter])
-        else:
-            keyword_phrase.append(keyword[counter])
+        keyword_phrase.append(keyword[counter])
         position = alphabet.index(l) + 1
         position2 = alphabet.index(keyword[counter]) + 1
         position_final = position - position2
         new_letter = alphabet[position_final]
-        decoded += new_letter
+        encoded += new_letter
         counter += 1
-    return decoded
+    return encoded
 
 
 print(vignere_decode(MSG4, "friends"))
