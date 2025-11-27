@@ -100,7 +100,7 @@ def caesar_encode(message, offset):
             encode += l
             continue
         position = alphabet.index(l) + 1
-        position -= 10
+        position -= offset
         new_letter = alphabet[position - 1]
         encode += new_letter
     return encode
@@ -112,4 +112,4 @@ print(caesar_decode(MSG1, 10))
 print(caesar_decode(MSG2, 14))
 for i in range(1, len(list(string.ascii_lowercase))):
     if "computers" in caesar_decode(MSG3, i):
-        print(caesar_decode(MSG3, i))
+        print(f"Offset {i}: {caesar_decode(MSG3, i)}")
