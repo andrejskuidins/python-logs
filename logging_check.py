@@ -5,6 +5,8 @@ logger = logging.getLogger(__name__)
 stream_handler = logging.StreamHandler(sys.stdout)
 logger.addHandler(stream_handler)
 logger.setLevel(logging.DEBUG)
+file_handler = logging.FileHandler("output.log")
+logger.addHandler(file_handler)
 
 
 def division():
