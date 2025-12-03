@@ -1,9 +1,33 @@
-def reverse_dict(my_dict):
-    return {v: k for k, v in my_dict.items()}
+def check_same_frequency(l1, l2):
+    def compare(lst):
+        d = {}
+        for i in lst:
+            d[i] = d.get(i, 0) + 1
+        return d
+
+    return compare(l1) == compare(l2)
 
 
-my_dict = {"a": 1, "b": 2, "c": 3}
-print(reverse_dict(my_dict))
+list1 = [1, 2, 3, 2, 1]
+list2 = [3, 1, 2, 1, 3]
+print(check_same_frequency(list1, list2))
+
+
+# def filter_dict(d, cond):
+#     return {k: v for k, v in d.items() if cond(k, v)}
+
+
+# my_dict = {"a": 1, "b": 2, "c": 3, "d": 4}
+# filtered_dict = filter_dict(my_dict, lambda k, v: v % 2 == 0)
+# print(filtered_dict)
+
+
+# def reverse_dict(my_dict):
+#     return {v: k for k, v in my_dict.items()}
+
+
+# my_dict = {"a": 1, "b": 2, "c": 3}
+# print(reverse_dict(my_dict))
 
 
 # def max_value_key(my_dict):
