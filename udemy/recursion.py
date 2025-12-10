@@ -1,11 +1,7 @@
 def flatten(arr):
-    if len(arr) == 0:
-        return True
-    if len(arr) == 1:
-        return cb(arr[0])
-    if cb(arr[0]):
-        return True
-    return someRecursive(arr[1:], cb)
+    if type(arr) == "int":
+        return arr
+    return flatten(arr[0])
 
 
 print(flatten([1, 2, 3, [4, 5]]))  # [1, 2, 3, 4, 5]
