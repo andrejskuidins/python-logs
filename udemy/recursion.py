@@ -1,13 +1,22 @@
-def flatten(arr):
-    if type(arr) == "int":
-        return arr
-    return flatten(arr[0])
+def capitalizeFirst(arr):
+    if len(arr) == 0:
+        return []
+    return list(arr[0].capitalize()) + capitalizeFirst(arr[1:])
 
 
-print(flatten([1, 2, 3, [4, 5]]))  # [1, 2, 3, 4, 5]
-print(flatten([1, [2, [3, 4], [[5]]]]))  # [1, 2, 3, 4, 5]
-print(flatten([[1], [2], [3]]))  # [1, 2, 3]
-print(flatten([[[[1], [[[2]]], [[[[[[[3]]]]]]]]]]))  # [1, 2, 3]
+print(capitalizeFirst(["car", "taco", "banana"]))  # ['Car','Taco','Banana']
+
+# def flatten(arr):
+#     print(arr)
+#     if type(arr) == type(int):
+#         return arr
+#     return flatten(arr[1:])
+
+
+# print(flatten([1, 2, 3, [4, 5]]))  # [1, 2, 3, 4, 5]
+# print(flatten([1, [2, [3, 4], [[5]]]]))  # [1, 2, 3, 4, 5]
+# print(flatten([[1], [2], [3]]))  # [1, 2, 3]
+# print(flatten([[[[1], [[[2]]], [[[[[[[3]]]]]]]]]]))  # [1, 2, 3]
 
 # def isOdd(num):
 #     if num % 2 == 0:
