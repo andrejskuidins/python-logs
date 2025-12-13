@@ -1,32 +1,49 @@
 def convert_to_bin(num):
     if num == 0:
-        return 0
-    return num % 2
+        return "0"
+    if num == 1:
+        return "1"
+    return convert_to_bin(num // 2) + str(num % 2)
 
 
-print(convert_to_bin(13))
+number = 16
+bin_num = int(convert_to_bin(number), 2)
+print(
+    f"Following number {number} representation in bin is {convert_to_bin(number)} {bin_num}"
+)
+
+number = 13
+bin_num = int(convert_to_bin(number), 2)
+print(
+    f"Following number {number} representation in bin is {convert_to_bin(number)} {bin_num}"
+)
+
+number = 11
+bin_num = int(convert_to_bin(number), 2)
+print(
+    f"Following number {number} representation in bin is {convert_to_bin(number)} {bin_num}"
+)
+
+# def collectStrings(obj):
+#     resultDict = []
+#     for v in obj.values():
+#         if isinstance(v, dict):
+#             resultDict.extend(collectStrings(v))
+#         elif type(v) == str:
+#             resultDict.append(v)
+#     return resultDict
 
 
-def collectStrings(obj):
-    resultDict = []
-    for v in obj.values():
-        if isinstance(v, dict):
-            resultDict.extend(collectStrings(v))
-        elif type(v) == str:
-            resultDict.append(v)
-    return resultDict
+# obj = {
+#     "stuff": "foo",
+#     "data": {
+#         "val": {
+#             "thing": {"info": "bar", "moreInfo": {"evenMoreInfo": {"weMadeIt": "baz"}}}
+#         }
+#     },
+# }
 
-
-obj = {
-    "stuff": "foo",
-    "data": {
-        "val": {
-            "thing": {"info": "bar", "moreInfo": {"evenMoreInfo": {"weMadeIt": "baz"}}}
-        }
-    },
-}
-
-print(collectStrings(obj))  # ['foo', 'bar', 'baz']
+# print(collectStrings(obj))  # ['foo', 'bar', 'baz']
 
 
 # def stringifyNumbers(obj):
