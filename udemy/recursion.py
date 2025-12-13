@@ -1,3 +1,12 @@
+def convert_to_bin(num):
+    if num == 0:
+        return 0
+    return num % 2
+
+
+print(convert_to_bin(13))
+
+
 def collectStrings(obj):
     resultDict = []
     for v in obj.values():
