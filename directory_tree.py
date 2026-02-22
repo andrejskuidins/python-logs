@@ -11,151 +11,53 @@ logging.basicConfig(
 )
 
 
-# too many exceptions, make 2-3 except for func AI!
 def get_list(location, config_file: str = APP_CONF) -> list:
-    results = []
-    try:
-        with open(config_file, "r") as f:
-            lines = f.readlines()
-    except Exception as e:
-        logging.error("Error reading configuration file '%s': %s", config_file, e)
-        return results
-
-    for line_num, line in enumerate(lines, 1):
-        try:
-            linux_obj = line.strip()
-            if not linux_obj:
-                logging.debug("Skipping empty line %d", line_num)
-                continue
-
-            logging.info("Processing object: %s (line %d)", linux_obj, line_num)
-
-            if os.path.isfile(linux_obj):
-                execute_file(linux_obj)
-                results.append(f"Executed file: {linux_obj}")
-            elif os.path.isdir(linux_obj):
-                check_create_dir(location, linux_obj)
-                results.append(f"Created/checked directory: {linux_obj}")
-            else:
-                logging.warning(
-                    "Object '%s' at line %d is neither a file nor a directory",
-                    linux_obj,
-                    line_num,
-                )
-                results.append(f"Skipped: {linux_obj}")
-
-        except (FileNotFoundError, PermissionError) as e:
-            logging.error(
-                "Access error for object '%s' at line %d: %s", 
-                linux_obj, 
-                line_num, 
-                e
-            )
-            if isinstance(e, FileNotFoundError):
-                results.append(f"File not found: {linux_obj}")
-            else:
-                results.append(f"Permission denied: {linux_obj}")
-        except (OSError, subprocess.SubprocessError) as e:
-            logging.error(
-                "System error for object '%s' at line %d: %s", 
-                linux_obj, 
-                line_num, 
-                e
-            )
-            results.append(f"System error: {linux_obj}")
-        except Exception as e:
-            logging.error(
-                "Unexpected error processing object '%s' at line %d: %s",
-                linux_obj,
-                line_num,
-                e,
-            )
-            results.append(f"Unexpected error: {linux_obj}")
-
-    return results
+    with open(config_file, "r") as f:
+        for l in f:
+            try:
+                linux_obj = l.strip()
+                logging.info("Processing object: %s", linux_obj)
+                if os.path.isfile(linux_obj):
+                    execute_file(linux_obj)
+                elif os.path.isdir(linux_obj):
+                    check_create_dir(location, linux_obj)
+                else:
+                    logging.info("Not suitable object %s", linux_obj)
+            except FileNotFoundError as e:
+                logging.error("file %s doesnt exist", e)
+            except PermissionError as e:
+                logging.error("user %s doesnt have access", e)
+            except Exception as e:
+                logging.error("unexpected exception: %s", e)
 
 
 def check_create_dir(location: str, dirname: str) -> None:
     try:
-        target_dir = os.path.join(location, os.path.basename(dirname))
-        logging.info("Creating directory: %s", target_dir)
-        os.makedirs(target_dir, exist_ok=True)
-        logging.info("Directory '%s' created or already exists", target_dir)
+        logging.info("Creating dirs: %s", dirname)
+        os.makedirs(f"{location}/{os.path.basename(dirname)}", exist_ok=True)
     except OSError as e:
-        logging.error(
-            "Cannot create directory '%s' due to error: %s",
-            os.path.join(location, os.path.basename(dirname)),
-            e,
-        )
-        raise  # Re-raise to be caught by the caller
+        logging.error("cannot create directory due to error: %s", e)
 
 
 def execute_file(filename: str) -> None:
     try:
         if os.path.splitext(filename)[1] == ".sh":
-            logging.info("Executing shell script: %s", filename)
-            # Check if the file is executable
-            if not os.access(filename, os.X_OK):
-                logging.warning(
-                    "File '%s' is not executable. Attempting to make it executable.",
-                    filename,
-                )
-                os.chmod(filename, os.stat(filename).st_mode | 0o111)
-
-            result = subprocess.run(
-                [filename],
-                capture_output=True,
-                text=True,
-                timeout=30,  # Add a timeout to prevent hanging
-            )
-            if result.returncode != 0:
-                logging.error(
-                    "Script '%s' exited with non-zero code %d: %s",
-                    filename,
-                    result.returncode,
-                    result.stderr,
-                )
-            else:
-                logging.info(
-                    "Script '%s' executed successfully. Output: %s",
-                    filename,
-                    result.stdout[:100],
-                )  # Log first 100 chars
-        else:
-            logging.warning(
-                "File '%s' is not a shell script (.sh), skipping execution", filename
-            )
-    except (subprocess.TimeoutExpired, subprocess.SubprocessError) as e:
-        logging.error("Process error while executing '%s': %s", filename, e)
-    except OSError as e:
-        logging.error("System error while executing '%s': %s", filename, e)
-    except Exception as e:
-        logging.error("Unexpected error while executing '%s': %s", filename, e)
+            logging.info("Executing file: %s", filename)
+            subprocess.run(filename, capture_output=True)
+    except subprocess.SubprocessError as e:
+        logging.error("cannot run process due to error: %s", e)
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Program captures files and folders and executes files while creating folders"
+        description="Program capturs files and folders and executes files while creating folders"
     )
-    parser.add_argument("location", help="Target location for directory operations")
+    parser.add_argument("location")  # positional argument
     args = parser.parse_args()
-
-    # Validate the location exists or can be created
-    if not os.path.exists(args.location):
-        try:
-            os.makedirs(args.location, exist_ok=True)
-            logging.info("Created target location: %s", args.location)
-        except OSError as e:
-            logging.error("Cannot create target location '%s': %s", args.location, e)
-            return
-
     try:
-        results = get_list(args.location)
-        logging.info("Processing completed. %d items processed.", len(results))
-        for result in results:
-            logging.debug("Result: %s", result)
+        get_list(args.location)
     except Exception as e:
-        logging.error("Unexpected error in main execution: %s", e)
+        logging.error(f"Unexpected error in main execution: {e}")
 
 
 if __name__ == "__main__":
