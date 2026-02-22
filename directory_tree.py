@@ -17,20 +17,8 @@ def get_list(location, config_file: str = APP_CONF) -> list:
     try:
         with open(config_file, "r") as f:
             lines = f.readlines()
-    except FileNotFoundError:
-        logging.error("Configuration file '%s' not found", config_file)
-        return results
-    except PermissionError:
-        logging.error(
-            "Permission denied when trying to read configuration file '%s'", config_file
-        )
-        return results
-    except OSError as e:
-        logging.error(
-            "OS error occurred while reading configuration file '%s': %s",
-            config_file,
-            e,
-        )
+    except Exception as e:
+        logging.error("Error reading configuration file '%s': %s", config_file, e)
         return results
 
     for line_num, line in enumerate(lines, 1):
@@ -56,27 +44,25 @@ def get_list(location, config_file: str = APP_CONF) -> list:
                 )
                 results.append(f"Skipped: {linux_obj}")
 
-        except FileNotFoundError:
-            logging.error("Object '%s' at line %d not found", linux_obj, line_num)
-            results.append(f"File not found: {linux_obj}")
-        except PermissionError:
+        except (FileNotFoundError, PermissionError) as e:
             logging.error(
-                "Permission denied for object '%s' at line %d", linux_obj, line_num
+                "Access error for object '%s' at line %d: %s", 
+                linux_obj, 
+                line_num, 
+                e
             )
-            results.append(f"Permission denied: {linux_obj}")
-        except OSError as e:
+            if isinstance(e, FileNotFoundError):
+                results.append(f"File not found: {linux_obj}")
+            else:
+                results.append(f"Permission denied: {linux_obj}")
+        except (OSError, subprocess.SubprocessError) as e:
             logging.error(
-                "OS error for object '%s' at line %d: %s", linux_obj, line_num, e
+                "System error for object '%s' at line %d: %s", 
+                linux_obj, 
+                line_num, 
+                e
             )
-            results.append(f"OS error: {linux_obj}")
-        except subprocess.SubprocessError as e:
-            logging.error(
-                "Subprocess error for object '%s' at line %d: %s",
-                linux_obj,
-                line_num,
-                e,
-            )
-            results.append(f"Subprocess error: {linux_obj}")
+            results.append(f"System error: {linux_obj}")
         except Exception as e:
             logging.error(
                 "Unexpected error processing object '%s' at line %d: %s",
@@ -139,12 +125,10 @@ def execute_file(filename: str) -> None:
             logging.warning(
                 "File '%s' is not a shell script (.sh), skipping execution", filename
             )
-    except subprocess.TimeoutExpired:
-        logging.error("Script '%s' execution timed out after 30 seconds", filename)
-    except subprocess.SubprocessError as e:
-        logging.error("Subprocess error while executing '%s': %s", filename, e)
+    except (subprocess.TimeoutExpired, subprocess.SubprocessError) as e:
+        logging.error("Process error while executing '%s': %s", filename, e)
     except OSError as e:
-        logging.error("OS error while executing '%s': %s", filename, e)
+        logging.error("System error while executing '%s': %s", filename, e)
     except Exception as e:
         logging.error("Unexpected error while executing '%s': %s", filename, e)
 
