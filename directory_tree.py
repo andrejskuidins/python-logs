@@ -1,6 +1,6 @@
-import os
 import subprocess
 import logging
+from pathlib import Path
 import argparse
 
 # Configuration file names for logging and processing
@@ -13,6 +13,7 @@ logging.basicConfig(
 )
 
 
+# AI! make optimizations to code
 def get_list(location, config_file: str = APP_CONF) -> list:
     """
     Process each line from the configuration file.
@@ -20,13 +21,16 @@ def get_list(location, config_file: str = APP_CONF) -> list:
     Execute shell scripts and create directories at the specified location.
     """
     with open(config_file, "r") as f:
-        for l in f:
+        for line in f:
             try:
-                linux_obj = l.strip()
+                linux_obj = line.strip()
+                if not linux_obj:
+                    continue
                 logging.info("Processing object: %s", linux_obj)
-                if os.path.isfile(linux_obj):
+                path = Path(linux_obj)
+                if path.is_file():
                     execute_file(linux_obj)
-                elif os.path.isdir(linux_obj):
+                elif path.is_dir():
                     check_create_dir(location, linux_obj)
                 else:
                     logging.info("Not suitable object %s", linux_obj)
@@ -45,7 +49,8 @@ def check_create_dir(location: str, dirname: str) -> None:
     """
     try:
         logging.info("Creating dirs: %s", dirname)
-        os.makedirs(f"{location}/{os.path.basename(dirname)}", exist_ok=True)
+        target_dir = Path(location) / Path(dirname).name
+        target_dir.mkdir(parents=True, exist_ok=True)
     except OSError as e:
         logging.error("cannot create directory due to error: %s", e)
 
@@ -56,7 +61,7 @@ def execute_file(filename: str) -> None:
     Uses subprocess.run to run the script and capture its output.
     """
     try:
-        if os.path.splitext(filename)[1] == ".sh":
+        if Path(filename).suffix == ".sh":
             logging.info("Executing file: %s", filename)
             subprocess.run(filename, capture_output=True)
     except subprocess.SubprocessError as e:
