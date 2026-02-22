@@ -1,18 +1,24 @@
-# AI! add comments, not very long
 import os
 import subprocess
 import logging
 import argparse
 
+# Configuration file names for logging and processing
 APP_LOG = "directory_tree.log"
 APP_CONF = "directory_tree.conf"
 
+# Set up logging to output to both console and a log file
 logging.basicConfig(
     level=logging.INFO, handlers=[logging.StreamHandler(), logging.FileHandler(APP_LOG)]
 )
 
 
 def get_list(location, config_file: str = APP_CONF) -> list:
+    """
+    Process each line from the configuration file.
+    For each path, check if it's a file or directory.
+    Execute shell scripts and create directories at the specified location.
+    """
     with open(config_file, "r") as f:
         for l in f:
             try:
@@ -33,6 +39,10 @@ def get_list(location, config_file: str = APP_CONF) -> list:
 
 
 def check_create_dir(location: str, dirname: str) -> None:
+    """
+    Create a directory at the specified location using the base name of the input path.
+    If the directory already exists, no error will be raised.
+    """
     try:
         logging.info("Creating dirs: %s", dirname)
         os.makedirs(f"{location}/{os.path.basename(dirname)}", exist_ok=True)
@@ -41,6 +51,10 @@ def check_create_dir(location: str, dirname: str) -> None:
 
 
 def execute_file(filename: str) -> None:
+    """
+    Execute a shell script file if it has a .sh extension.
+    Uses subprocess.run to run the script and capture its output.
+    """
     try:
         if os.path.splitext(filename)[1] == ".sh":
             logging.info("Executing file: %s", filename)
@@ -50,8 +64,12 @@ def execute_file(filename: str) -> None:
 
 
 def main():
+    """
+    Main function to parse command line arguments and start processing.
+    Expects a location argument where directories will be created.
+    """
     parser = argparse.ArgumentParser(
-        description="Program capturs files and folders and executes files while creating folders"
+        description="Program captures files and folders and executes files while creating folders"
     )
     parser.add_argument("location")  # positional argument
     args = parser.parse_args()
