@@ -1,3 +1,4 @@
+#AI! refactor using best practices
 import json
 
 DICT_COMMON = {}
